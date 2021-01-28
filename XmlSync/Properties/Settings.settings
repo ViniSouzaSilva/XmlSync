@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="XmlSync.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Caminho" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Users\Usuario\Desktop\denise</Value>
+    </Setting>
+    <Setting Name="CaminhoFTP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ftp://ambisoft.com.br/XML/Teste/</Value>
+    </Setting>
+    <Setting Name="Login" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ambisoft1</Value>
+    </Setting>
+    <Setting Name="Senha" Type="System.String" Scope="User">
+      <Value Profile="(Default)">**Tr1lh@FTP2021**</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
