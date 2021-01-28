@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XmlSync.EntityFramework.Models;
 using XmlSync.Properties;
+using System.IO.Compression;
 
 namespace XmlSync.EntityFramework.ViewModels
 {
@@ -19,43 +20,39 @@ namespace XmlSync.EntityFramework.ViewModels
             _context.Database.Migrate();
         }
 
-        DirectoryInfo Dir = new DirectoryInfo(Settings.Default.Caminho);
+        DirectoryInfo Dir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "ZIP");
         XmlSyncDbContext _context = new XmlSyncFactory().CreateDbContext();
        
         XML_INFO xml_info = new XML_INFO();
-        public void IniciarServicos()
-        {
+     
+        
 
-            BuscaXmlPasta();
-
-
-        }
 
        // public async Task<string> BuscaXmlPasta()
-       public void BuscaXmlPasta()
+       public void BuscaXmlPasta(string nomeArq)
         {
             try
             {
-                
+                Compressao(nomeArq);
                 //for (int i = 0; i < 10; i++)
                 //{
 
-                  
-                   // xml = _context.XML_INFOs.Select(c => c).Where(c => c.SINCRONIZADO == false).ToList();
-                   foreach(FileInfo info in Dir.GetFiles())                    
+
+                // xml = _context.XML_INFOs.Select(c => c).Where(c => c.SINCRONIZADO == false).ToList();
+                foreach (FileInfo info in Dir.GetFiles())                    
                    {
-                        xml_info = _context.XML_INFOs.Select(c => c).Where(c => c.NOME_XML == info.Name).FirstOrDefault();
+                        //xml_info = _context.XML_INFOs.Select(c => c).Where(c => c.NOME_XML == info.Name).FirstOrDefault();
                         //if (xml_info?.NOME_XML is not null) 
                         //{
-                            TextReader Leitor = (TextReader)new StreamReader(info.FullName);
-                            XML_INFO X = new XML_INFO();
-                            X.NOME_XML = info.Name;
-                            X.CONTEUDO = Leitor.ReadToEnd();
-                            X.DATA_CRIAÇÃO = info.CreationTime;
-                            X.SINCRONIZADO = false;
+                           // TextReader Leitor = (TextReader)new StreamReader(info.FullName);
+                           // XML_INFO X = new XML_INFO();
+                          //  X.NOME_XML = info.Name;
+                          //  X.CONTEUDO = Leitor.ReadToEnd();
+                          //  X.DATA_CRIAÇÃO = info.CreationTime;
+                          //  X.SINCRONIZADO = false;
                             SincronizarFTP(info);
-                            _context.Update(X);
-                            _context.SaveChanges();
+                           // _context.Update(X);
+                          // _context.SaveChanges();
 
                             //_context.XML_INFOs.Select(c=>c)
 
@@ -84,9 +81,9 @@ namespace XmlSync.EntityFramework.ViewModels
         {
             try
             {
-                 List<XML_INFO> xml = new List<XML_INFO>();
+                // List<XML_INFO> xml = new List<XML_INFO>();
 
-                 xml = _context.XML_INFOs.Select(c => c).Where(c => c.SINCRONIZADO == false).ToList();
+                // xml = _context.XML_INFOs.Select(c => c).Where(c => c.SINCRONIZADO == false).ToList();
 
 
               //  foreach (XML_INFO _INFOs in xml)
@@ -124,12 +121,28 @@ namespace XmlSync.EntityFramework.ViewModels
 
                      fs.Close();
                      responseStream.Close();
+
             }
             catch (Exception ex)
             {
 
                 throw;
             }
+
+        }
+
+        public void Compressao(string nomeArq)
+        {
+            try
+            {
+                ZipFile.CreateFromDirectory(Settings.Default.Caminho, AppDomain.CurrentDomain.BaseDirectory+"ZIP"+"\\"+nomeArq+".zip");
+            }
+            catch (Exception ex)
+            {
+
+               
+            }
+            
 
         }
 

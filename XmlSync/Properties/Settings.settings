@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="XmlSync.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Caminho" Type="System.String" Scope="Application">
+    <Setting Name="Caminho" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Users\Usuario\Desktop\denise</Value>
     </Setting>
     <Setting Name="CaminhoFTP" Type="System.String" Scope="User">

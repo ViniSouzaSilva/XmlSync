@@ -23,12 +23,15 @@ namespace XmlSync.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Usuario\\Desktop\\denise")]
         public string Caminho {
             get {
                 return ((string)(this["Caminho"]));
+            }
+            set {
+                this["Caminho"] = value;
             }
         }
         
