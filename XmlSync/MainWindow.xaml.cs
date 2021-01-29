@@ -27,9 +27,21 @@ namespace XmlSync
             InitializeComponent();
             this.DataContext = new MainWidowVM();
             Login_txb.Text = Settings.Default.Login;
-            Senha_txb.Text = Settings.Default.Senha;
+            Senha_txb.Password = Settings.Default.Senha;
             Caminho_txb.Text = Settings.Default.Caminho;
             CaminhoFTP_txb.Text = Settings.Default.CaminhoFTP;
+            ((MainWidowVM)DataContext).BuscaXmlPasta();
+            Iniciar_lbl.Content = "Upload feito com sucesso";
+            string[] args = Environment.GetCommandLineArgs();
+            foreach (string arg in args) 
+            {
+                if (arg == "-silent")
+                {
+                    Application.Current.Shutdown();
+                }
+
+            }
+            
 
         }
 
@@ -40,26 +52,26 @@ namespace XmlSync
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (NomeArquivo_txb.Text.Equals(""))
-            {
-                MessageBox.Show("Digite um nome para o arquivo","Atenção",MessageBoxButton.OK,MessageBoxImage.Error);
-            }
-            else 
-            {
+            
                 Iniciar_lbl.Content = "";
-                ((MainWidowVM)DataContext).BuscaXmlPasta(NomeArquivo_txb.Text);
+                ((MainWidowVM)DataContext).BuscaXmlPasta();
                 Iniciar_lbl.Content = "Upload feito com sucesso";
 
-            }
+            
         }
 
         private void Salvar_btn_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.Login = Login_txb.Text;
-            Settings.Default.Senha = Senha_txb.Text;
+            Settings.Default.Senha = Senha_txb.Password;
             Settings.Default.Caminho = Caminho_txb.Text;
             Settings.Default.CaminhoFTP = CaminhoFTP_txb.Text;
             Settings.Default.Save();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

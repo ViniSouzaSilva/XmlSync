@@ -14,5 +14,8 @@
     <Setting Name="Senha" Type="System.String" Scope="User">
       <Value Profile="(Default)">**Tr1lh@FTP2021**</Value>
     </Setting>
+    <Setting Name="Silencioso" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

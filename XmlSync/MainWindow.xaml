@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XmlSync"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="11*"/>
@@ -60,8 +60,6 @@
                     <RowDefinition Height="5*"/>
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
-                    <Label Content="Digite o nome do arquivo" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="6"/>
-                    <TextBox x:Name="NomeArquivo_txb" Grid.Row="3" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="6" />
                     <Label x:Name="Iniciar_lbl" HorizontalAlignment="Center" FontStretch="Normal" Grid.Row="13" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="10" FontSize="20" FontFamily="Arial"/>
                     <Button Content="Iniciar" Grid.Row="6" Grid.Column="5" Grid.RowSpan="6" Grid.ColumnSpan="6" Click="Button_Click"/>
                   
@@ -111,7 +109,7 @@
                     <Label Grid.Row="8" Grid.RowSpan="2" Grid.ColumnSpan="2" Content="Caminho" FontFamily="Arial" FontSize="16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <Label Grid.Row="12" Grid.RowSpan="2" Grid.ColumnSpan="3" Content="Caminho FTP" FontFamily="Arial" FontSize="16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <TextBox x:Name="Login_txb" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
-                    <TextBox x:Name="Senha_txb" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                    <PasswordBox x:Name="Senha_txb" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
                     <TextBox x:Name="Caminho_txb" Grid.Row="8" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="9"/>
                     <TextBox x:Name="CaminhoFTP_txb" Grid.Row="12" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="9"/>
                     <Button x:Name="Salvar_btn" Content="Salvar" Grid.Column="13" Grid.Row="14" Grid.RowSpan="2" Grid.ColumnSpan="3" Click="Salvar_btn_Click"/>

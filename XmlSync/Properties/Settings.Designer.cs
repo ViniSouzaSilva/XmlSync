@@ -70,5 +70,17 @@ namespace XmlSync.Properties {
                 this["Senha"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Silencioso {
+            get {
+                return ((bool)(this["Silencioso"]));
+            }
+            set {
+                this["Silencioso"] = value;
+            }
+        }
     }
 }

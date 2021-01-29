@@ -21,19 +21,64 @@ namespace XmlSync.EntityFramework.ViewModels
         }
 
         DirectoryInfo Dir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "ZIP");
+        DirectoryInfo Diretorio = new DirectoryInfo(Settings.Default.Caminho);
+        DirectoryInfo DiretorioTemp = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "Temp");
         XmlSyncDbContext _context = new XmlSyncFactory().CreateDbContext();
-       
+        DateTime MesAnterior = DateTime.Now.AddMonths(-1);
         XML_INFO xml_info = new XML_INFO();
-     
-        
 
-
-       // public async Task<string> BuscaXmlPasta()
-       public void BuscaXmlPasta(string nomeArq)
+        public void LimpaPastas() 
         {
             try
             {
-                Compressao(nomeArq);
+                foreach (FileInfo info in DiretorioTemp.GetFiles())
+                {
+                    File.Delete(info.FullName);
+                }
+                foreach (FileInfo info in Dir.GetFiles())
+                {
+                    File.Delete(info.FullName);
+                }
+            }
+            catch (Exception ex) 
+            {
+                audit("ERRO", ex.Message);
+            }
+        }
+
+
+       public void SeparaXml() 
+       {
+            try
+            {
+                
+                LimpaPastas();
+                foreach (FileInfo info in Diretorio.GetFiles())
+                {
+                    if (info.LastWriteTime.Month == MesAnterior.Month && info.LastWriteTime.Year == MesAnterior.Year && info.Extension.ToLower() == ".xml")
+                    {
+                        info.CopyTo(AppDomain.CurrentDomain.BaseDirectory + "Temp\\"+info.Name);
+
+
+                    }
+
+                }
+            }
+            catch (Exception ex) 
+            {
+
+                audit("ERRO", ex.Message);
+
+            }
+
+       }
+       // public async Task<string> BuscaXmlPasta()
+       public void BuscaXmlPasta()
+        {
+            try
+            {
+                SeparaXml();
+                Compressao();
                 //for (int i = 0; i < 10; i++)
                 //{
 
@@ -41,6 +86,7 @@ namespace XmlSync.EntityFramework.ViewModels
                 // xml = _context.XML_INFOs.Select(c => c).Where(c => c.SINCRONIZADO == false).ToList();
                 foreach (FileInfo info in Dir.GetFiles())                    
                    {
+                    
                         //xml_info = _context.XML_INFOs.Select(c => c).Where(c => c.NOME_XML == info.Name).FirstOrDefault();
                         //if (xml_info?.NOME_XML is not null) 
                         //{
@@ -70,6 +116,7 @@ namespace XmlSync.EntityFramework.ViewModels
             }
             catch (Exception ex)
             {
+                audit("ERRO", ex.Message);
                 //return "deu ruim as " + DateTime.Now;
                 //throw;
 
@@ -121,30 +168,47 @@ namespace XmlSync.EntityFramework.ViewModels
 
                      fs.Close();
                      responseStream.Close();
+                audit("Funcionou","The wide xml walk away");
 
             }
             catch (Exception ex)
             {
-
-                throw;
+                audit("ERRO", ex.Message);
+                
             }
 
         }
 
-        public void Compressao(string nomeArq)
+        public void Compressao()
         {
             try
             {
-                ZipFile.CreateFromDirectory(Settings.Default.Caminho, AppDomain.CurrentDomain.BaseDirectory+"ZIP"+"\\"+nomeArq+".zip");
+                ZipFile.CreateFromDirectory(AppDomain.CurrentDomain.BaseDirectory+"Temp", AppDomain.CurrentDomain.BaseDirectory+"ZIP"+"\\"+ MesAnterior.Month+MesAnterior.Year+".zip");
             }
             catch (Exception ex)
             {
 
-               
+                audit("ERRO", ex.Message);
             }
             
 
         }
 
+        #region Auditoria 
+        static StreamWriter auditwriter = new StreamWriter($@"{AppDomain.CurrentDomain.BaseDirectory}\Logs\audit-{DateTime.Today.ToString("dd-MM-yy")}.txt", true) { AutoFlush = true };
+        readonly static object auditObj = new object();
+
+
+        public static void audit(string tag, string texto, int nivelDeAuditoria = 1)
+        {
+            System.IO.Directory.CreateDirectory($@"{AppDomain.CurrentDomain.BaseDirectory}\Logs");
+            lock (auditObj)
+            {
+               
+                    auditwriter.WriteLine($"{DateTime.Now.ToString("HH:mm:ss.fff")}\t{tag} >>\t{texto}");
+                
+            }
+        }//Escreve no arquivo da auditoria.
+        #endregion
     }
 }
