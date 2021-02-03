@@ -183,7 +183,7 @@ namespace XmlSync.EntityFramework.ViewModels
         {
             try
             {
-                ZipFile.CreateFromDirectory(AppDomain.CurrentDomain.BaseDirectory+"Temp", AppDomain.CurrentDomain.BaseDirectory+"ZIP"+"\\"+ MesAnterior.Month+MesAnterior.Year+".zip");
+                ZipFile.CreateFromDirectory(AppDomain.CurrentDomain.BaseDirectory+"Temp", AppDomain.CurrentDomain.BaseDirectory+"ZIP"+"\\"+"XML-mes-"+MesAnterior.Month+"ano-"+MesAnterior.Year+".zip");
             }
             catch (Exception ex)
             {
